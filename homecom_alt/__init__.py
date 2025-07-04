@@ -876,6 +876,24 @@ class HomeComK40(HomeComAlt):
         )
         return await self._to_data(response)
 
+    async def async_set_hc_manual_room_setpoint(
+        self, device_id: str, hc_id: str, temp: str
+    ) -> None:
+        """Get dhw temp level."""
+        await self.get_token()
+        await self._async_http_request(
+            "put",
+            BOSCHCOM_DOMAIN
+            + BOSCHCOM_ENDPOINT_GATEWAYS
+            + device_id
+            + BOSCHCOM_ENDPOINT_HEATING_CIRCUITS
+            + "/"
+            + hc_id
+            + BOSCHCOM_ENDPOINT_HC_MANUAL_ROOM_SETPOINT,
+            {"value": temp},
+            1,
+        )
+
     async def async_test(self, device_id: str, hc_id: str) -> Any:
         """Get hc control type."""
         await self.get_token()
